@@ -41,6 +41,8 @@ NAME
 echoer
 ```
 
+> This `echoer` workflow template is a very simple workflow that just repeats the incoming data in its stdin (logs).
+
 ## Configure the function
 
 ### Argo config secret
@@ -116,12 +118,58 @@ Function                        Invocations     Replicas
 veba-to-argoi-echoer            0               1
 ```
 
+### Test
+
 You can also check the function from the UI and do a first test by running:
 
 ```bash
-echo "{'test': 'This is a test message to echo'}" | faas-cli invoke veba-to-argoi-echoer
+echo '{"id": "test", "source": "sourcetest", "subject": "any", "data": {}}' | faas-cli invoke veba-to-argoi-echoer
 ```
 
 This should produce an excecution of a Worklow based on the echoer template in Argo.
 
+### Results
 
+```bash
+argo get @latest
+
+# Expected output
+
+Name:                echoer-7ldps
+Namespace:           argo
+ServiceAccount:      argo-svc
+Status:              Succeeded
+Conditions:
+ Completed           True
+Created:             Wed Jan 06 09:56:19 +0000 (44 seconds from now)
+Started:             Wed Jan 06 09:56:19 +0000 (44 seconds from now)
+Finished:            Wed Jan 06 09:56:22 +0000 (47 seconds from now)
+Duration:            3 seconds
+ResourcesDuration:   1s*(100Mi memory),1s*(1 cpu)
+Parameters:
+  message:           {"id": "test", "source": "sourcetest", "subject": "any", "data": {}}
+
+STEP             TEMPLATE     PODNAME       DURATION  MESSAGE
+ ✔ echoer-7ldps  echoer/echo  echoer-7ldps  26s
+```
+
+And in the logs:
+
+```bash
+argo logs @latest
+
+# Expected output
+echoer-7ldps: {"id": "test", "source": "sourcetest", "subject": "any", "data": {}}
+```
+
+If you trigger on of the vCenter events configured in your `stack.yaml` file (like `VmCreatedEvent, VmClonedEvent, VmRegisteredEvent, DrsVmPoweredOnEvent, VmPoweredOnEvent` in the provided example) from you vCenter server:
+
+1. VEBA event router will trigger the OpenFaaS function with event as an incoming data
+2. OpenFaaS function will trigger the Argo worklow with the event as an incoming data
+3. You can now run a (more or less complex) workflow(s) catching the event data and making multiple actions.
+
+If needed, you can re-run an existing instance of a workflow (with the same inputs) with the following kind of command:
+
+```bash
+argo resubmit @latest --watch
+```
