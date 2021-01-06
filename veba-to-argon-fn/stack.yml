@@ -3,13 +3,14 @@ provider:
   name: openfaas
   gateway: http://openfaas.vlab.local
 functions:
-  veba-to-argo:
+  veba-to-argo-echoer:
     lang: python3
     handler: ./handler
     image: lrivallain/veba-to-argo
     environment:
       write_debug: true
       read_debug: true
+      ARGO_SECRET_NAME: argoconfig
     secrets:
       - argoconfig
     annotations:

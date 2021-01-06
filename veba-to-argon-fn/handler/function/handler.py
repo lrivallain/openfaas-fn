@@ -10,8 +10,8 @@ from function.logger import init_logger
 
 logger = logging.getLogger(__name__)
 
-### Config location
-ARGO_CONFIG='/var/openfaas/secrets/argoconfig'
+### Config location based on ARGO_SECRET_NAME
+ARGO_CONFIG="/var/openfaas/secrets/{os.environ.get('ARGO_SECRET_NAME', 'argoconfig')}"
 
 class ArgoWorflow:
     """The ArgoWorflow provide a way to start an argo WF based on an existing template.
