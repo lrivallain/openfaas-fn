@@ -5,6 +5,7 @@ argoserver:
   serviceaccount: argo-svc
   template: echoer
   event_param_name: message
+  base64_encode: false
   labels:
     through: openfaas
     coming-from: veba
