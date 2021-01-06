@@ -63,8 +63,8 @@ class ArgoWorflow:
         # base64 convertion
         if self.base64_encode:
             event_data = base64.b64encode(
-                json.dumps(event).decode('utf-8')
-            ).encode()
+                json.dumps(event)
+            ).decode()
         else:
             event_data = json.dumps(event)
         # prepare the workflow data
