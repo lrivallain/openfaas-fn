@@ -1,0 +1,11 @@
+argoserver:
+  server: argo.vlab.lcl
+  protocol: http
+  namespace: argo
+  serviceaccount: argo-svc
+  template: echoer
+  event_param_name: message
+  labels:
+    through: openfaas
+    coming-from: veba
+    foo: bar

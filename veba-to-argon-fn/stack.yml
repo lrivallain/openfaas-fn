@@ -1,0 +1,16 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://openfaas.vlab.local
+functions:
+  veba-to-argo:
+    lang: python3
+    handler: ./handler
+    image: lrivallain/veba-to-argo
+    environment:
+      write_debug: true
+      read_debug: true
+    secrets:
+      - argoconfig
+    annotations:
+      topic: VmCreatedEvent, VmClonedEvent, VmRegisteredEvent, DrsVmPoweredOnEvent, VmPoweredOnEvent
