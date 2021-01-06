@@ -62,7 +62,9 @@ class ArgoWorflow:
         self.labels.append(f"event_subject={event.get('subject')}")
         # base64 convertion
         if self.base64_encode:
-            event_data = base64.b64encode(json.dumps(event).encode('utf-8'))
+            event_data = base64.b64encode(
+                json.dumps(event).encode('utf-8')
+            ).encode()
         else:
             event_data = json.dumps(event)
         # prepare the workflow data
