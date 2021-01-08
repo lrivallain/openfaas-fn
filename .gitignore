@@ -1,4 +1,5 @@
 veba-to-argo-fn/argoconfig.yaml
 
 .python-version
-*/.python-version
+veba-to-argo-fn/argoconfig.yaml
+vm-creation-attr/vcconfig.yaml

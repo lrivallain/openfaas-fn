@@ -1,0 +1,10 @@
+vcenter:
+  server: vcsa-fqdn
+  user: service-account@vsphere.local
+  password: **********
+  ssl_verify: false
+
+attributes:
+  owner: event-owner
+  creation_date: event-creation_date
+  last_poweredon: event-last_poweredon

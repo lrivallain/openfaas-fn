@@ -61,6 +61,7 @@ argoserver:
   serviceaccount: argo-svc
   template: echoer
   event_param_name: message
+  base64_encode: false
   labels:
     through: openfaas
     coming-from: veba
@@ -80,7 +81,11 @@ argoconfig
 
 ### `stack.yaml`
 
-Edit the `stack.yaml` according to your needs:
+Copy and edit the `stack.yaml` according to your needs:
+
+```bash
+cp stack.yaml echoer-stack.yaml
+```
 
 ```yaml
 version: 1.0
@@ -110,7 +115,7 @@ faas template store pull python3
 ## Deploy the function
 
 ```bash
-faas-cli deploy -f stack.yml
+faas-cli deploy -f echoer-stack.yml
 faas-cli list
 
 # Expected output

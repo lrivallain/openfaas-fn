@@ -1,0 +1,16 @@
+provider:
+  name: openfaas
+  gateway: http://openfaas.vlab.local
+functions:
+  vm-creation-attr:
+    lang: python3
+    handler: ./handler
+    image: lrivallain/veba-vc-vm-creation-attr
+    environment:
+      write_debug: true
+      read_debug: true
+      VC_SECRET_NAME: vcconfig
+    secrets:
+      - vcconfig
+    annotations:
+      topic: VmCreatedEvent, VmClonedEvent, VmRegisteredEvent, DrsVmPoweredOnEvent, VmPoweredOnEvent, VmPoweringOnWithCustomizedDVPortEvent
